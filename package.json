@@ -2,10 +2,11 @@
   "name": "react-tictactoe",
   "version": "1.0.0",
   "description": "a tictactoe play game based on react",
-  "main": "src/main/js/index.js",
+  "main": "src/server/index.js",
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "express": "^4.16.4",
     "jquery": "^3.3.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -22,15 +23,20 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "nodemon": "^1.18.4",
+    "style-loader": "^0.23.1",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.8"
   },
   "scripts": {
     "start": "webpack-dev-server --open",
-    "deploy": "cp ./src/main/html/* ./build/",
+    "deploy": "cp ./src/html/* ./build/",
     "build": "npm run clean && npm run compile && npm run deploy",
     "clean": "rm -rf ./build/*",
-    "compile": "NODE_ENV=production webpack --config ./webpack.config.js --progress"
+    "compile": "NODE_ENV=production webpack --config ./webpack.config.js --progress",
+    "server": "nodemon src/server/index.js",
+    "dev": "concurrently 'npm run server' 'npm run client'"
   }
 }

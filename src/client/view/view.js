@@ -3,6 +3,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {styles} from "../style/style.js";
+import PlayGrid from './PlayGrid.js';
 
 export default class TicTacToe extends React.Component {
   constructor(props){
@@ -21,7 +22,3 @@ export default class TicTacToe extends React.Component {
     );
   }
 }
-
-const PlayGrid = (props)=>{
-  return (<div index={props.index} style={styles.Grid}></div>);
-};
