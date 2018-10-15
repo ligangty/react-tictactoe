@@ -7,12 +7,19 @@ import {styles} from "../style/style.js";
 export default class PlayGrid extends React.Component {
   constructor(props){
     super(props);
-    this.state = {};
+    this.state = {
+      changed: false,
+      imageType: ""
+    };
+    this.handleImageChange = this.handleImageChange.bind(this);
   }
 
-  componentDidMount() {}
+  // componentDidMount() {}
 
-  changeType(){
+  handleImageChange(){
+    if(this.state.changed){
+      return;
+    }
     let imgType = "circle";
     if(this.state.imageType==="circle"){
       imgType = "block";
@@ -20,7 +27,7 @@ export default class PlayGrid extends React.Component {
       imgType = "circle";
     }
 
-    this.setState(Object.assign[{}, this.state, {imageType: imgType}]);
+    this.setState({changed:true, imageType: imgType});
   }
 
   render() {
@@ -31,7 +38,7 @@ export default class PlayGrid extends React.Component {
       image = <img src="/images/block.gif" />
     }
     return (
-      <div index={this.props.index} style={styles.Grid} onClick={this.changeType()}>
+      <div index={this.props.index} style={styles.Grid} onClick={this.handleImageChange}>
         {image}
       </div>
     );
