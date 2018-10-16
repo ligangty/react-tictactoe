@@ -1,7 +1,8 @@
 const Container ={
-  width: "410px",
-	height: "400px",
-	border: "1px #0066FF solid"
+  width: "396px",
+	height: "396px",
+	border: "1px #0066FF solid",
+  display: "inline-block",
 };
 const Grid = {
 	width: "120px",

@@ -16,18 +16,11 @@ export default class PlayGrid extends React.Component {
 
   // componentDidMount() {}
 
-  handleImageChange(){
-    if(this.state.changed){
-      return;
+  handleImageChange(callback){
+    if(!this.state.changed){
+      this.setState({changed:true});
     }
-    let imgType = "circle";
-    if(this.state.imageType==="circle"){
-      imgType = "block";
-    }else {
-      imgType = "circle";
-    }
-
-    this.setState({changed:true, imageType: imgType});
+    return ()=>callback();
   }
 
   render() {
@@ -38,7 +31,7 @@ export default class PlayGrid extends React.Component {
       image = <img src="/images/block.gif" />
     }
     return (
-      <div index={this.props.index} style={styles.Grid} onClick={this.handleImageChange}>
+      <div index={this.props.index} style={styles.Grid} onClick={this.handleImageChange(this.props.click)}>
         {image}
       </div>
     );
