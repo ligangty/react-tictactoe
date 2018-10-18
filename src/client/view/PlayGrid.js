@@ -7,32 +7,37 @@ import {styles} from "../style/style.js";
 export default class PlayGrid extends React.Component {
   constructor(props){
     super(props);
+    // this._changed=false;
     this.state = {
-      changed: false,
-      imageType: ""
+      imgFile: "",
+      rendered: false
     };
-    this.handleImageChange = this.handleImageChange.bind(this);
+    // this.handleImageChange = this.handleImageChange.bind(this);
   }
 
   // componentDidMount() {}
 
   handleImageChange(callback){
-    if(!this.state.changed){
-      this.setState({changed:true});
-    }
-    return ()=>callback();
+    return ()=>callback(this.props.index);
+  }
+
+  isRendered(){
+    return this.state.rendered;
+  }
+
+  changeImage(imageFile){
+    this.setState({
+      imgFile: imageFile,
+      rendered: true
+    });
   }
 
   render() {
-    let image = "";
-    if(this.state.imageType === "circle"){
-      image = <img src="/images/circle.gif" />;
-    }else if(this.state.imageType === "block"){
-      image = <img src="/images/block.gif" />
-    }
     return (
       <div index={this.props.index} style={styles.Grid} onClick={this.handleImageChange(this.props.click)}>
-        {image}
+        { this.state.rendered ? (
+          <img src={"/images/"+this.state.imgFile} />
+        ) : "" }
       </div>
     );
   }
