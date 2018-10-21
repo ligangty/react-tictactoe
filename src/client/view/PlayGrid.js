@@ -7,15 +7,11 @@ import {styles} from "../style/style.js";
 export default class PlayGrid extends React.Component {
   constructor(props){
     super(props);
-    // this._changed=false;
     this.state = {
       imgFile: "",
       rendered: false
     };
-    // this.handleImageChange = this.handleImageChange.bind(this);
   }
-
-  // componentDidMount() {}
 
   handleImageChange(callback){
     return ()=>callback(this.props.index);
