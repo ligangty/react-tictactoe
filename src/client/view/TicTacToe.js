@@ -30,6 +30,11 @@ export default class TicTacToe extends React.Component {
     this._gridMatrix = GRID_ARRAY_INDEX.map(i=>({type : 0, clicked : false}));
     this._currentStep = "";
 		this._gameOver = false;
+
+		// use key to control re-render all component
+		this.state = {key: Math.random()};
+
+		this.restartGame = this.restartGame.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +69,15 @@ export default class TicTacToe extends React.Component {
 
   }
 
+	restartGame(){
+		this._grids = undefined;
+    this._gridMatrix = GRID_ARRAY_INDEX.map(i=>({type : 0, clicked : false}));
+    this._currentStep = "";
+		this._gameOver = false;
+		// use key to control re-render all component
+		this.setState({key: Math.random()});
+	}
+
   checkGameWinner(){
     for(var index=0;index<WINNING_RULESET.length;index++){
 			var winRule=WINNING_RULESET[index];
@@ -87,8 +101,11 @@ export default class TicTacToe extends React.Component {
       this._grids = GRID_ARRAY_INDEX.map(i=><PlayGrid ref={"grid" + i} key={"playGrid" + i} index={i} click={(idx)=>this.clickGrid(idx)}/>);
     }
     return (
-      <div style={styles.Container}>
+			// use key to control re-render all component
+      <div style={styles.Container} key={this.state.key}>
         {this._grids}
+				<hr />
+				<button onClick={this.restartGame}>Restart</button>
       </div>
     );
   }
