@@ -1,12 +1,6 @@
 'use strict'
 
 import React from 'react';
-import {render} from 'react-dom';
-import $ from 'jquery/src/core';
-import 'jquery/src/ajax';
-import 'jquery/src/ajax/xhr';
-import { Route } from 'react-router';
-
 
 export default class RegisterForm extends React.Component{
   constructor(props){
@@ -32,25 +26,32 @@ export default class RegisterForm extends React.Component{
   handleSubmit(event){
     event.preventDefault();
     let usernameVal = this.state.username;
-    $.getJSON({
-      url: `/api/user/${usernameVal}`,
-      type: "POST",
-      responseType: "application/json",
-      contentType: "application/json",
-      dataType: "json"
-    }).done((response) => {
-      let result = response;
-      this.setState({
-        message: result.message,
-        messageStyle: 'green'
-      });
-      setTimeout(()=>this.props.history.push('/play'),2000);
-    }).fail((jqxhr, textStatus, error) => {
-      this.setState({
-        message: JSON.parse(jqxhr.responseText).error,
-        messageStyle: 'red'
-      });
-    });
+    fetch(`/api/user/${usernameVal}`, {
+      method: "POST",
+      credentials: 'same-origin',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: payload.data ? payload.data : undefined
+    })
+    .then(response => {
+      if(response.ok && payload.done){
+        response.json().then(data=>{
+          this.setState({
+            message: data.message,
+            messageStyle: 'gree'
+          });
+        });
+        setTimeout(()=>this.props.history.push('/play'),2000);
+      }else if(!response.ok && payload.fail){
+        response.text().then(data=>{
+          this.setState({
+            message: JSON.parse(response.statusText).error,
+            messageStyle: 'red'
+          });
+        });        
+      }
+    });    
   }
 
   render(){
